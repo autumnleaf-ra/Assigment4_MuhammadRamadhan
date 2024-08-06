@@ -17,7 +17,7 @@ My task is to create a RESTful API, according to the given requirements.
 ## Deployment
 Deployment :
 > - Nginx Private server
-> - [demo](https://assigment3muhammadramadhan-production.up.railway.app/api/v1/helmet)
+> - [demo](http://phincon-dev.uk.to/api/v1/helmet/all)
 
 ## Stack
 The tech stack used in building RESTful API includes:
