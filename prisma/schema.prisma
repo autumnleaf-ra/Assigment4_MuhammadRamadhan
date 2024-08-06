@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model helmets {
+  id      Int     @id @default(autoincrement())
+  type_id Int?
+  name    String? @db.VarChar(255)
+  price   Float   @db.Float
+  stock   Int?
+  type    type?   @relation(fields: [type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "helmets_ibfk_1")
+
+  @@index([type_id], map: "type_id")
+}
+
+model type {
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(255)
+  helmets helmets[]
+}
+
+model user {
+  id       Int    @id @default(autoincrement())
+  username String @unique(map: "username") @db.VarChar(255)
+  password String @db.VarChar(255)
+}

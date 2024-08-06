@@ -1,0 +1,434 @@
+{
+  "info": {
+    "_postman_id": "0c33d1ad-bcbb-4b41-85f7-0ac6a1f896a9",
+    "name": "Assigment 4",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29613461"
+  },
+  "item": [
+    {
+      "name": "Dev",
+      "item": [
+        {
+          "name": "API V1",
+          "item": [
+            {
+              "name": "Get All Helmet",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/helmet/all",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["api", "v1", "helmet", "all"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Helmet Type",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/helmet/type",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["api", "v1", "helmet", "type"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add Helmet",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"type\" : 1,\n    \"name\" : \"Arai F\",\n    \"price\" : \"2500000\",\n    \"stock\" : 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/helmet/add_helmet",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["api", "v1", "helmet", "add_helmet"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Price Stock Helmet",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"price\": 52.55,\n    \"stock\" : 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/helmet/edit_helmet/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["api", "v1", "helmet", "edit_helmet", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Helmet",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/helmet/delete/6",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["api", "v1", "helmet", "delete", "6"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "",
+                      "pm.environment.set(\"token\", jsonData.data);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\" : \"testaja\",\r\n    \"password\" : \"rama123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/helmet/login",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["api", "v1", "helmet", "login"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Register",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\" : \"testaja\",\r\n    \"password\" : \"rama123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/v1/helmet/register",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8080",
+                  "path": ["api", "v1", "helmet", "register"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Production",
+      "item": [
+        {
+          "name": "API V1",
+          "item": [
+            {
+              "name": "Get All Helmet",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJyYW1hIiwiaWF0IjoxNzIxODkwMzAwLCJleHAiOjE3MjE4OTM5MDB9.x3beekSwe8GGIB01UgObyxZRM2UdOzx2rWZq5JFpzl4",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://phincon-dev.uk.to/api/v1/helmet/all",
+                  "protocol": "http",
+                  "host": ["phincon-dev", "uk", "to"],
+                  "path": ["api", "v1", "helmet", "all"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Helmet Type",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://phincon-dev.uk.to/api/v1/helmet/type",
+                  "protocol": "http",
+                  "host": ["phincon-dev", "uk", "to"],
+                  "path": ["api", "v1", "helmet", "type"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add Helmet",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"type\" : 1,\n    \"name\" : \"Arai A\",\n    \"price\" : 25000,\n    \"stock\" : 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://phincon-dev.uk.to/api/v1/helmet/add_helmet",
+                  "protocol": "http",
+                  "host": ["phincon-dev", "uk", "to"],
+                  "path": ["api", "v1", "helmet", "add_helmet"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Price Stock Helmet",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"price\": 52.55,\n    \"stock\" : 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://phincon-dev.uk.to/api/v1/helmet/edit_helmet/1",
+                  "protocol": "http",
+                  "host": ["phincon-dev", "uk", "to"],
+                  "path": ["api", "v1", "helmet", "edit_helmet", "1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Helmet",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://phincon-dev.uk.to/api/v1/helmet/delete/6",
+                  "protocol": "http",
+                  "host": ["phincon-dev", "uk", "to"],
+                  "path": ["api", "v1", "helmet", "delete", "6"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "",
+                      "pm.environment.set(\"token\", jsonData.data);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\" : \"rama\",\r\n    \"password\" : \"123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://phincon-dev.uk.to/api/v1/helmet/login",
+                  "protocol": "http",
+                  "host": ["phincon-dev", "uk", "to"],
+                  "path": ["api", "v1", "helmet", "login"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Register",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\" : \"testaja\",\r\n    \"password\" : \"rama123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://phincon-dev.uk.to:8080/api/v1/helmet/register",
+                  "protocol": "http",
+                  "host": ["phincon-dev", "uk", "to"],
+                  "port": "8080",
+                  "path": ["api", "v1", "helmet", "register"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,859 @@
+swagger: '2.0'
+info:
+  title: Helmet Store API
+  version: 1.0.0
+
+host: localhost:8080
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: 'Bearer token for API authentication'
+
+paths:
+  /api/v1/helmet/login:
+    post:
+      description: 'User login'
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User credentials
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                example: 'user123'
+              password:
+                type: string
+                example: 'pass123'
+            required:
+              - username
+              - password
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  token_login:
+                    type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+             status: '00000'
+             message: Success
+             data:
+               id: 4
+               username: testaja
+               token_login: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJ0ZXN0YWphIiwiaWF0IjoxNzIxODc2MjQ5LCJleHAiOjE3MjE4Nzk4NDl9.5cZu7GIH8KXHtfzNf_tiyeUgjprPCU_n8wFruLtznOI
+             transaction_id: A3022407250957291770
+             
+        400:
+          description: Bad Request - The request parameters are invalid
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 400
+              message: Username can only contain alphabetic characters.
+              error: Bad Request
+              transaction_id: A3022407251005440210
+              
+        422:
+          description: Not Found - The requested resource was not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 422
+              message: Account not found, username or password wrong !
+              error: Not Found
+              transaction_id: A3022407250959118220
+              
+        404:
+          description: Not Found - The requested route was not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 404
+              message: No route matched with those values
+              error: Not Found
+              transaction_id: A3022407251009152750
+              
+        500:
+          description: Error - Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 500
+              message: An internal server error occurred
+              error: Internal Server Error
+              transaction_id: A3022407251010424070
+  /api/v1/helmet/login/register:
+    post:
+      description: 'User Register'
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: User credentials
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                example: 'user123' # Example value for the request
+              password:
+                type: string
+                example: 'pass123' # Example value for the request
+            required:
+              - username
+              - password
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  token_login:
+                    type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: '00000'
+              message: Success
+              data: Register username successfully
+              transaction_id: A3022407251007184420
+              
+        400:
+          description: Bad Request - The request parameters are invalid
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 400
+              message: Username can only contain alphabetic characters.
+              error: Bad Request
+              transaction_id: A3022407251005440210
+              
+        404:
+          description: Not Found - The requested route was not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+             status: 404
+             message: No route matched with those values
+             error: Not Found
+             transaction_id: A3022407251009152750
+             
+        500:
+          description: Error - Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+             status: 500
+             message: An internal server error occurred
+             error: Internal Server Error
+             transaction_id: A3022407251010424070
+             
+        409:
+          description: Conflict - Username already exist
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 409
+              message: Username already exist
+              error: Conflict
+              transaction_id: A3022407251016509260
+  /api/v1/helmet/login/all:
+    get:
+      description: 'Get All Helmet'
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string
+              data:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        price:
+                          type: integer
+                        stock:
+                          type: integer
+                        type:
+                          type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: '00000'
+              message: Success
+              data:
+                count: 2
+                list:
+                  - id: 1
+                    name: Arai J
+                    price: 2000000
+                    stock: 5
+                    type: Full Face
+                  - id: 2
+                    name: Arai B
+                    price: 2500000
+                    stock: 100
+                    type: Full Face
+              transaction_id: A3022407251027316230
+              
+        401:
+          description: Unauthorized - Bearer token is missing or invalid
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 401
+              message: Access denied. No token provided
+              error: Unauthorized
+              transaction_id: A3022407251033274140
+              
+        404:
+          description: Not Found - The requested route was not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+             status: 404
+             message: No route matched with those values
+             error: Not Found
+             transaction_id: A3022407251009152750
+             
+        500:
+          description: Error - Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 500
+              message: An internal server error occurred
+              error: Internal Server Error
+              transaction_id: A3022407251010424070
+  /api/v1/helmet/login/type:
+    get:
+      description: 'Get All Type Helmet'
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: Successful response - List of helmet types
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: '00000'
+              message:
+                type: string
+                example: 'Success'
+              data:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 2
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: 'Full Face'
+          examples:
+            application/json:
+              value:
+                status: '00000'
+                message: 'Success'
+                data:
+                  count: 2
+                  list:
+                    - id: 1
+                      name: 'Full Face'
+                    - id: 2
+                      name: 'Half Face'
+                transaction_id: 'A3022407251038167840'
+        401:
+          description: Unauthorized - Bearer token is missing or invalid
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 401
+              message: Access denied. No token provided
+              error: Unauthorized
+              transaction_id: A3022407251033274140
+              
+        404:
+          description: Not Found - The requested route was not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 404
+              message: No route matched with those values
+              error: Not Found
+              transaction_id: A3022407251009152750
+              
+        500:
+          description: Error - Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 500
+              message: An internal server error occurred
+              error: Internal Server Error
+              transaction_id: A3022407251010424070
+  /api/v1/helmet/login/add_helmet:
+    post:
+      description: 'Add New Helmet'
+      security:
+        - Bearer: []
+      parameters:
+        - name: body
+          in: body
+          description: 'Helmet details to be added'
+          required: true
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+                example: '1'
+              name:
+                type: string
+                example: 'Arai F'
+              price:
+                type: string
+                example: '2500000'
+              stock:
+                type: integer
+                example: 100
+      responses:
+        200:
+          description: Successful response - Operation completed successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: '00000'
+              message:
+                type: string
+                example: 'Success'
+              data:
+                type: string
+                example: "Added 'Arai F' as '2500000' to helmet with stock 100"
+              transaction_id:
+                type: string
+                example: 'A3022407251041027630'
+          examples:
+            application/json:
+              value:
+                status: '00000'
+                message: 'Success'
+                data: "Added 'Arai F' as '2500000' to helmet with stock 100"
+                transaction_id: 'A3022407251041027630'
+        400:
+          description: Bad Request - The request parameters are invalid
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+             status: 400
+             message: 'Body is required or Type variable must be number/stringx  '
+             error: Bad Request
+             transaction_id: A3022407251005440210
+             
+        401:
+          description: Unauthorized - Bearer token is missing or invalid
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              value:
+                status: 401
+                message: 'Access denied. No token provided'
+                error: 'Unauthorized'
+                transaction_id: 'A3022407251033274140'
+        404:
+          description: Not Found - The requested route was not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              value:
+                status: 404
+                message: 'No route matched with those values'
+                error: 'Not Found'
+                transaction_id: 'A3022407251009152750'
+        500:
+          description: Error - Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              value:
+                status: 500
+                message: 'An internal server error occurred'
+                error: 'Internal Server Error'
+                transaction_id: 'A3022407251010424070'
+  /api/v1/helmet/login/edit_helmet/{id}:
+    put:
+      summary: Update helmet details
+      description: Update the price and stock of a helmet using its ID.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: 'The ID of the helmet'
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: 'Price & stock must be added'
+          required: true
+          schema:
+            type: object
+            properties:
+              price:
+                type: string
+                example: '2500000'
+              stock:
+                type: integer
+                example: 100
+            additionalProperties: false
+      responses:
+        200:
+          description: Successful response - Operation completed successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: '00000'
+              message:
+                type: string
+                example: 'Success'
+              data:
+                type: string
+                example: "Added 'Arai F' as '2500000' to helmet with stock 100"
+              transaction_id:
+                type: string
+                example: 'A3022407251041027630'
+          examples:
+            application/json:
+              value:
+                status: '00000'
+                message: 'Success'
+                data: "Added 'Arai F' as '2500000' to helmet with stock 100"
+                transaction_id: 'A3022407251041027630'
+        400:
+          description: Bad Request - The request parameters are invalid
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              status: 400
+              message: 'Body is required or Type variable must be number/string  '
+              error: Bad Request
+              transaction_id: A3022407251005440210
+
+        401:
+          description: Unauthorized - Bearer token is missing or invalid
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              value:
+                status: 401
+                message: 'Access denied. No token provided'
+                error: 'Unauthorized'
+                transaction_id: 'A3022407251033274140'
+        404:
+          description: Not Found - The requested route was not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              value:
+                status: 404
+                message: 'No route matched with those values'
+                error: 'Not Found'
+                transaction_id: 'A3022407251009152750'
+        500:
+          description: Error - Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              value:
+                status: 500
+                message: 'An internal server error occurred'
+                error: 'Internal Server Error'
+                transaction_id: 'A3022407251010424070'
+  /api/v1/helmet/login/delete/{id}:
+    delete:
+      summary: Update helmet details
+      description: Remove Helmet
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: 'The ID of the helmet'
+          required: true
+          type: string
+      responses:
+        200:
+          description: Successful response - Operation completed successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: '00000'
+              message:
+                type: string
+                example: 'Success'
+              data:
+                type: string
+                example: 'Delete id 12 successfully'
+              transaction_id:
+                type: string
+                example: 'A3022407251104372950'
+          examples:
+            application/json:
+              value:
+                status: '00000'
+                message: 'Success'
+                data: 'Delete id 12 successfully'
+                transaction_id: 'A3022407251104372950'
+        401:
+          description: Unauthorized - Bearer token is missing or invalid
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              value:
+                status: 401
+                message: 'Access denied. No token provided'
+                error: 'Unauthorized'
+                transaction_id: 'A3022407251033274140'
+        404:
+          description: Not Found - The requested route was not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 404
+              message:
+                type: string
+                example: 'Helmet with id 12 not found'
+              error:
+                type: string
+                example: 'Not Found'
+              transaction_id:
+                type: string
+                example: 'A3022407251106195360'
+          examples:
+            application/json:
+              value:
+                status: 404
+                message: 'Helmet with id 12 not found'
+                error: 'Not Found'
+                transaction_id: 'A3022407251106195360'
+        500:
+          description: Error - Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              error:
+                type: string
+              transaction_id:
+                type: string
+          examples:
+            application/json:
+              value:
+                status: 500
+                message: 'An internal server error occurred'
+                error: 'Internal Server Error'
+                transaction_id: 'A3022407251010424070'
